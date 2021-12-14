@@ -20,7 +20,7 @@ public class funcionesflota {
 				m[i][j] = 45;
 			}
 		}
-		creacionbarcos.insertarbarcos(m, creacionbarcos.getnumLanchas(), creacionbarcos.getnumBuques());
+		creacionbarcos.insertarbarcos(m, creacionbarcos.getnumLanchas(), creacionbarcos.getnumBuques(), creacionbarcos.getnumCruceros());
         return m;
     }
 
