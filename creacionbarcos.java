@@ -6,23 +6,23 @@ public class creacionbarcos {
     private static int numLanchas = 5;
     private static int numBuques = 3;
     private static int numCrucero = 1;
-    private static int ntotal = 8;
+    private static int numPortaaviones = 1;
 
     // 5 lanchas, 3 barcos, 1 crucero y 1 portaaviones
     // crucero = z
     // portaaviones = p
     // agua = A
     // Aquí crearemos la lancha
-    private static void insertarlancha(char[][] mapa) {
+    private static void insertarlancha(char[][] mapa) { //solo 1 posicion
         int posLancha[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
         int posCreacionX = posLancha[0];
         int posCreacionY = posLancha[1];
         boolean check = false;
         while (!check) {
             try {
-                if (mapa[posCreacionX][posCreacionY] == 45) {
+                if (mapa[posCreacionX][posCreacionY] == '-') {
                     ;
-                    mapa[posCreacionX][posCreacionY] = 76;
+                    mapa[posCreacionX][posCreacionY] = 'L';
                     check = true;
                 } else {
                     int nuevaPosicion[] = funcionrandom.puntoAleatorio(funcionrandom.getTamañoMapa());
@@ -46,11 +46,11 @@ public class creacionbarcos {
         boolean check = false;
         while (!check) {
             try {
-                if (mapa[posCreacionX][posCreacionY] == 45 && mapa[posCreacionX][posCreacionY + 1] == 45
-                        && mapa[posCreacionX][posCreacionY + 2] == 45) {
-                    mapa[posCreacionX][posCreacionY] = 66;
-                    mapa[posCreacionX][posCreacionY + 1] = 66;
-                    mapa[posCreacionX][posCreacionY + 2] = 66;
+                if (mapa[posCreacionX][posCreacionY] == '-' && mapa[posCreacionX][posCreacionY + 1] == '-'
+                        && mapa[posCreacionX][posCreacionY + 2] == '-') {
+                    mapa[posCreacionX][posCreacionY] = 'B';
+                    mapa[posCreacionX][posCreacionY + 1] = 'B';
+                    mapa[posCreacionX][posCreacionY + 2] = 'B';
                     check = true;
                 } else {
                     int nuevaPosicion[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
@@ -66,19 +66,20 @@ public class creacionbarcos {
         }
     }
 
-    // crucero == z
-    private static void insertarcrucero(char[][] mapa) {
+    // crucero == Z
+    private static void insertarcrucero(char[][] mapa) { // 4 en horizontal
         int posCrucero[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
         int posCreacionX = posCrucero[0];
         int posCreacionY = posCrucero[1];
         boolean check = false;
         while (!check) {
             try {
-                if (mapa[posCreacionX][posCreacionY] == 45 && mapa[posCreacionX][posCreacionY + 1] == 45
-                        && mapa[posCreacionX][posCreacionY + 2] == 45) {
-                    mapa[posCreacionX][posCreacionY] = 90;
-                    mapa[posCreacionX][posCreacionY + 1] = 90;
-                    mapa[posCreacionX][posCreacionY + 2] = 90;
+                if (mapa[posCreacionX][posCreacionY] == '-' && mapa[posCreacionX][posCreacionY + 1] == '-'
+                        && mapa[posCreacionX][posCreacionY + 2] == '-' && mapa[posCreacionX][posCreacionY + 3] == '-') {
+                    mapa[posCreacionX][posCreacionY] = 'Z';
+                    mapa[posCreacionX][posCreacionY + 1] = 'Z';
+                    mapa[posCreacionX][posCreacionY + 2] = 'Z';
+                    mapa[posCreacionX][posCreacionY + 3] = 'Z';
                     check = true;
                 } else {
                     int nuevaPosicion[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
@@ -94,8 +95,35 @@ public class creacionbarcos {
         }
     }
 
+    //portaaviones == P
+    private static void insertarportaaviones(char[][] mapa){ //4 en vertical
+        int posPortaaviones[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
+        int posCreacionX = posPortaaviones[0];
+        int posCreacionY = posPortaaviones[1];
+        boolean check = false;
+        while(!check){
+            try{
+                if (mapa[posCreacionX][posCreacionY] == '-' && mapa[posCreacionX + 1][posCreacionY] == '-' 
+                && mapa[posCreacionX + 2][posCreacionY]  == '-' && mapa[posCreacionX + 3][posCreacionY] == '-'){ 
+                    mapa[posCreacionX][posCreacionY] = 'P';
+                    mapa[posCreacionX + 1][posCreacionY] = 'P';
+                    mapa[posCreacionX + 2][posCreacionY] = 'P';
+                    mapa[posCreacionX + 3][posCreacionY] = 'P';
+                } else{
+                    int nuevaPosicion[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
+                    posCreacionX = nuevaPosicion[0];
+                    posCreacionY = nuevaPosicion[1];
+                }
+            }catch (Exception e){
+                int nuevaPosicion[] = funcionrandom.puntoAleatorio(funcionesflota.getTamañoMapa());
+                posCreacionX = nuevaPosicion[0];
+                posCreacionY = nuevaPosicion[1];
+                check = false;
+            }
+        }
+    }
     // aquí insertamos los barcos
-    public static void insertarbarcos(char[][] mapa, int numLanchas, int numBuques, int numCrucero) {
+    public static void insertarbarcos(char[][] mapa, int numLanchas, int numBuques, int numCrucero, int numPortaaviones) {
         for (int i = 0; i < numLanchas; i++) {
             insertarlancha(mapa);
         }
@@ -105,10 +133,12 @@ public class creacionbarcos {
         for (int i = 0; i < numBuques; i++) {
             insertarcrucero(mapa);
         }
-        ntotal = numLanchas + numBuques + numCrucero;
+        for (int i = 0 ; i < numPortaaviones ; i++){
+            insertarportaaviones(mapa);
+        }
     }
 
-    // getter y seters
+    // get y set para los barcos
     public static int getnumLanchas() {
         return numLanchas;
     }
@@ -119,6 +149,9 @@ public class creacionbarcos {
 
     public static int getnumCruceros() {
         return numCrucero;
+    }
+    public static int getnumPortaaviones(){
+        return numPortaaviones;
     }
 
     public static void setnLanchas(int numLanchas) {
@@ -131,5 +164,8 @@ public class creacionbarcos {
 
     public static void setnCrucero(int numCrucero) {
         creacionbarcos.numCrucero = numCrucero;
+    }
+    public static void setnPortaaviones(int numPortaaviones){
+        creacionbarcos.numPortaaviones = numPortaaviones;
     }
 }
