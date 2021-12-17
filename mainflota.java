@@ -5,11 +5,14 @@ public class mainflota{
     public static void main(String[] args) {
 
         //Aquí definimos todas las variables main;
-        char[][] mapa = funcionesflota.crearmapa(funcionesflota.getTamañoMapa());
-
+        char[][] mapauser = funcionesflota.crearmapauser(funcionesflota.getTamañoMapa());
+        //char[][] mapabot = funcionesflota.crearmapabot(funcionesflota.getTamañoMapa());
 
         //Debajo de esto insertaremos las funciones
-        funcionesflota.mostrarmapa(mapa);
+        funcionesflota.mostrarmapa(mapauser);
+        funcionesflota.atacar(mapauser);
+        //System.out.println("\n-------------------------------------------------------");
+        //funcionesflota.mostrarmapa(mapabot);
 
 
     }
